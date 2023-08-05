@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FormInstance } from "antd";
-import TextAreaCommon from "../../../../../../components/common/textArea";
+import TextAreaCommon from "../../../../../../common/textArea";
 const formType: NodeFormId = "T1-Text";
 interface TextAreaNodeProps {
   name: string;

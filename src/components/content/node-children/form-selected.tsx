@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { BiEdit } from "react-icons/bi";
 import { FormInstance } from "antd";
-import ButtonIconRoundCommon from "../../components/common/button-icon-round";
+import ButtonIconRoundCommon from "../../common/button-icon-round";
 
 interface FormSelectedProps {
   Content: (input: CreateContectSelect) => React.ReactNode;
@@ -82,6 +82,7 @@ const FormSelected: React.FC<FormSelectedProps> = ({
          <BiEdit className={"m-auto text-white text-md font-bold"}></BiEdit>
        </ButtonIconRoundCommon>
      </div> */}
+
           {Content?.({
             form: form,
             formName: "content",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MinusOutlined } from "@ant-design/icons";
-import ButtonIconRoundCommon from "../../../../../components/common/button-icon-round";
+import ButtonIconRoundCommon from "../../../../../common/button-icon-round";
 
 interface ControlNodeSelectedProps {
   //   children: JSX.Element;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormInstance } from "antd";
-import HtmlEditorCommon from "../../../components/common/html-editor";
+import HtmlEditorCommon from "../../../common/html-editor";
 
 interface ChlidrenContentHtmlProps {
   imageName: string;

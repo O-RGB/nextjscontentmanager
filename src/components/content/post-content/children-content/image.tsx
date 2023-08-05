@@ -1,60 +1,55 @@
-import { FormInstance, Modal } from "antd";
 import React, { useEffect, useState } from "react";
-import ButtonCommon from "../../../../../../components/common/button/button";
-import GalleryUpload from "../../../../../../components/common/gallery";
-import InputCommon from "../../../../../../components/common/input/input";
-import OImage from "../../../../../../components/image-optimization /OImage";
-const formType: NodeFormId = "T2-Image";
-interface ImageNodeProps {
-  name: string;
+import { FormInstance, Modal } from "antd";
+import ButtonCommon from "../../../common/button/button";
+import GalleryUpload from "../../../common/gallery";
+import InputCommon from "../../../common/input/input";
+import OImage from "../../../image-optimization /OImage";
+
+interface ChlidrenContentImageProps {
+  imageName: string;
+  indexActive: number;
+  iniImage?: string;
+  iniAlt?: string;
+  onSet: (output: onSetArgument) => void;
+  form: FormInstance<any>;
   disabled?: boolean;
-  index: number;
-  //   onChange?: (content: string) => void;
-  onSet?: (description: NodeSelectOutput) => void;
-  form?: FormInstance<any>;
-  initValue?: ContentImage;
 }
 
-const ImageNode: React.FC<ImageNodeProps> = ({
-  name,
-  index,
-  //   onChange,
+const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
   onSet,
+  indexActive,
+  iniImage,
+  iniAlt,
+  imageName,
   form,
-  initValue,
-  disabled = false,
+  disabled,
 }) => {
   const [image, setImage] = useState<string>();
   const [alt, setAlt] = useState<string>();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   useEffect(() => {
-    if (form && initValue) {
-      setImage(initValue.imageUrl);
+    if (iniImage) {
+      setImage(iniImage);
 
-      if (initValue.imageAlt) {
-        setAlt(initValue.imageAlt);
+      if (iniAlt) {
+        setAlt(iniAlt);
       }
 
-      onSet?.({
-        formId: formType,
-        index: index,
-        // isRemove: false,
-        imageUrl: {
-          imageUrl: initValue.imageUrl,
-          imageAlt: initValue.imageAlt,
-        },
+      onSet({
+        indexActive: indexActive,
+        image: { imageUrl: image ?? iniImage, imageAlt: iniAlt },
       });
 
       setTimeout(() => {
-        form.setFieldValue(name, initValue.imageUrl);
-        if (initValue.imageAlt) {
-          form.setFieldValue(name + "i1-alt", initValue.imageAlt);
+        form.setFieldValue(imageName + `-${indexActive}-` + "i1", iniImage);
+        if (iniAlt) {
+          form.setFieldValue(imageName + "i1-alt", iniAlt);
         }
       }, 0);
     }
-  }, [initValue]);
+  }, [iniImage, iniAlt]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -69,25 +64,17 @@ const ImageNode: React.FC<ImageNodeProps> = ({
   };
 
   const onClickImageOnGallry = (imageUrl: string) => {
-    if (form) {
-      form.setFieldValue(name, undefined);
+    form.setFieldValue(imageName + `-${indexActive}-` + "i1", undefined);
 
-      setTimeout(() => {
-        setImage(imageUrl);
-        form.setFieldValue(name, imageUrl);
-
-        onSet?.({
-          formId: formType,
-          //   isRemove: false,
-          index: index,
-          imageUrl: {
-            imageUrl: imageUrl,
-            imageAlt: initValue?.imageAlt,
-          },
-        });
-        handleOk();
-      }, 100);
-    }
+    setTimeout(() => {
+      setImage(imageUrl);
+      form.setFieldValue(imageName + `-${indexActive}-` + "i1", imageUrl);
+      onSet({
+        indexActive: indexActive,
+        image: { imageUrl: imageUrl, imageAlt: iniAlt },
+      });
+      handleOk();
+    }, 100);
   };
 
   return (
@@ -101,11 +88,8 @@ const ImageNode: React.FC<ImageNodeProps> = ({
       >
         <GalleryUpload onClickImage={onClickImageOnGallry}></GalleryUpload>
       </Modal>
-
-      <div className="relative flex flex-col gap-2 w-full justify-center items-center py-6 ">
-        <div
-          className="bg-gray-100 w-56 md:w-full h-60 md:h-96 flex rounded-lg overflow-hidden" //p-10
-        >
+      <div className="flex flex-col gap-2 w-full justify-center items-center">
+        <div className="bg-gray-300 w-full h-96 md:h-96 flex rounded-lg overflow-hidden">
           <div className="w-full h-full flex justify-center items-center ">
             <div className="w-full relative h-full">
               {image && (
@@ -121,7 +105,7 @@ const ImageNode: React.FC<ImageNodeProps> = ({
                     <div className="w-full">
                       <InputCommon
                         FormItemProps={{
-                          name: name,
+                          name: imageName + `-${indexActive}-` + "i1",
                           label: "image",
                           required: true,
                           rules: [
@@ -138,11 +122,9 @@ const ImageNode: React.FC<ImageNodeProps> = ({
                             setImage(undefined);
                             setTimeout(() => {
                               setImage(e.target.value);
-                              onSet?.({
-                                formId: formType,
-                                index: index,
-                                // isRemove: false,
-                                imageUrl: {
+                              onSet({
+                                indexActive: indexActive,
+                                image: {
                                   imageUrl: e.target.value,
                                   imageAlt: alt,
                                 },
@@ -166,10 +148,10 @@ const ImageNode: React.FC<ImageNodeProps> = ({
             </div>
           </div>
         </div>
-        <div className="py-3 px-7  w-96 md:w-full  bg-gray-100 rounded-lg">
+        <div className="py-3 px-7  w-full  bg-gray-100 rounded-lg">
           <InputCommon
             FormItemProps={{
-              name: name + "i1-alt",
+              name: imageName + "i1-alt",
               label: "Image Caption",
               className: "p-0 m-0 ",
             }}
@@ -180,11 +162,9 @@ const ImageNode: React.FC<ImageNodeProps> = ({
                 setAlt(undefined);
                 setTimeout(() => {
                   setAlt(e.target.value);
-                  onSet?.({
-                    formId: formType,
-                    index: index,
-                    // isRemove: false,
-                    imageUrl: { imageUrl: image, imageAlt: e.target.value },
+                  onSet({
+                    indexActive: indexActive,
+                    image: { imageUrl: image, imageAlt: e.target.value },
                   });
                 }, 100);
               },
@@ -196,4 +176,4 @@ const ImageNode: React.FC<ImageNodeProps> = ({
   );
 };
 
-export default ImageNode;
+export default ChlidrenContentImage;

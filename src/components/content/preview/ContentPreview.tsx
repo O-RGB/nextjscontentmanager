@@ -1,5 +1,5 @@
 import React from "react";
-import OImage from "../../components/image-optimization /OImage";
+import OImage from "../../image-optimization /OImage";
 
 interface ContentPreviewProps {
   contentForSend: ContectForSend[];

@@ -1,55 +1,60 @@
-import React, { useEffect, useState } from "react";
 import { FormInstance, Modal } from "antd";
-import ButtonCommon from "../../../components/common/button/button";
-import GalleryUpload from "../../../components/common/gallery";
-import InputCommon from "../../../components/common/input/input";
-import OImage from "../../../components/image-optimization /OImage";
-
-interface ChlidrenContentImageProps {
-  imageName: string;
-  indexActive: number;
-  iniImage?: string;
-  iniAlt?: string;
-  onSet: (output: onSetArgument) => void;
-  form: FormInstance<any>;
+import React, { useEffect, useState } from "react";
+import ButtonCommon from "../../../../../../common/button/button";
+import GalleryUpload from "../../../../../../common/gallery";
+import InputCommon from "../../../../../../common/input/input";
+import OImage from "../../../../../../image-optimization /OImage";
+const formType: NodeFormId = "T2-Image";
+interface ImageNodeProps {
+  name: string;
   disabled?: boolean;
+  index: number;
+  //   onChange?: (content: string) => void;
+  onSet?: (description: NodeSelectOutput) => void;
+  form?: FormInstance<any>;
+  initValue?: ContentImage;
 }
 
-const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
+const ImageNode: React.FC<ImageNodeProps> = ({
+  name,
+  index,
+  //   onChange,
   onSet,
-  indexActive,
-  iniImage,
-  iniAlt,
-  imageName,
   form,
-  disabled,
+  initValue,
+  disabled = false,
 }) => {
   const [image, setImage] = useState<string>();
   const [alt, setAlt] = useState<string>();
 
-  useEffect(() => {
-    if (iniImage) {
-      setImage(iniImage);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-      if (iniAlt) {
-        setAlt(iniAlt);
+  useEffect(() => {
+    if (form && initValue) {
+      setImage(initValue.imageUrl);
+
+      if (initValue.imageAlt) {
+        setAlt(initValue.imageAlt);
       }
 
-      onSet({
-        indexActive: indexActive,
-        image: { imageUrl: image ?? iniImage, imageAlt: iniAlt },
+      onSet?.({
+        formId: formType,
+        index: index,
+        // isRemove: false,
+        imageUrl: {
+          imageUrl: initValue.imageUrl,
+          imageAlt: initValue.imageAlt,
+        },
       });
 
       setTimeout(() => {
-        form.setFieldValue(imageName + `-${indexActive}-` + "i1", iniImage);
-        if (iniAlt) {
-          form.setFieldValue(imageName + "i1-alt", iniAlt);
+        form.setFieldValue(name, initValue.imageUrl);
+        if (initValue.imageAlt) {
+          form.setFieldValue(name + "i1-alt", initValue.imageAlt);
         }
       }, 0);
     }
-  }, [iniImage, iniAlt]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  }, [initValue]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -64,17 +69,25 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
   };
 
   const onClickImageOnGallry = (imageUrl: string) => {
-    form.setFieldValue(imageName + `-${indexActive}-` + "i1", undefined);
+    if (form) {
+      form.setFieldValue(name, undefined);
 
-    setTimeout(() => {
-      setImage(imageUrl);
-      form.setFieldValue(imageName + `-${indexActive}-` + "i1", imageUrl);
-      onSet({
-        indexActive: indexActive,
-        image: { imageUrl: imageUrl, imageAlt: iniAlt },
-      });
-      handleOk();
-    }, 100);
+      setTimeout(() => {
+        setImage(imageUrl);
+        form.setFieldValue(name, imageUrl);
+
+        onSet?.({
+          formId: formType,
+          //   isRemove: false,
+          index: index,
+          imageUrl: {
+            imageUrl: imageUrl,
+            imageAlt: initValue?.imageAlt,
+          },
+        });
+        handleOk();
+      }, 100);
+    }
   };
 
   return (
@@ -88,8 +101,11 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
       >
         <GalleryUpload onClickImage={onClickImageOnGallry}></GalleryUpload>
       </Modal>
-      <div className="flex flex-col gap-2 w-full justify-center items-center">
-        <div className="bg-gray-300 w-full h-96 md:h-96 flex rounded-lg overflow-hidden">
+
+      <div className="relative flex flex-col gap-2 w-full justify-center items-center py-6 ">
+        <div
+          className="bg-gray-100 w-56 md:w-full h-60 md:h-96 flex rounded-lg overflow-hidden" //p-10
+        >
           <div className="w-full h-full flex justify-center items-center ">
             <div className="w-full relative h-full">
               {image && (
@@ -105,7 +121,7 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
                     <div className="w-full">
                       <InputCommon
                         FormItemProps={{
-                          name: imageName + `-${indexActive}-` + "i1",
+                          name: name,
                           label: "image",
                           required: true,
                           rules: [
@@ -122,9 +138,11 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
                             setImage(undefined);
                             setTimeout(() => {
                               setImage(e.target.value);
-                              onSet({
-                                indexActive: indexActive,
-                                image: {
+                              onSet?.({
+                                formId: formType,
+                                index: index,
+                                // isRemove: false,
+                                imageUrl: {
                                   imageUrl: e.target.value,
                                   imageAlt: alt,
                                 },
@@ -148,10 +166,10 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
             </div>
           </div>
         </div>
-        <div className="py-3 px-7  w-full  bg-gray-100 rounded-lg">
+        <div className="py-3 px-7  w-96 md:w-full  bg-gray-100 rounded-lg">
           <InputCommon
             FormItemProps={{
-              name: imageName + "i1-alt",
+              name: name + "i1-alt",
               label: "Image Caption",
               className: "p-0 m-0 ",
             }}
@@ -162,9 +180,11 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
                 setAlt(undefined);
                 setTimeout(() => {
                   setAlt(e.target.value);
-                  onSet({
-                    indexActive: indexActive,
-                    image: { imageUrl: image, imageAlt: e.target.value },
+                  onSet?.({
+                    formId: formType,
+                    index: index,
+                    // isRemove: false,
+                    imageUrl: { imageUrl: image, imageAlt: e.target.value },
                   });
                 }, 100);
               },
@@ -176,4 +196,4 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
   );
 };
 
-export default ChlidrenContentImage;
+export default ImageNode;

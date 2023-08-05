@@ -17,7 +17,7 @@ const ImageLeftImageRight: React.FC<ImageLeftImageRightProps> = ({
   disabled,
 }) => {
   return (
-    <div className="flex   flex-row  gap-7 h-full justify-center items-center">
+    <div className="flex flex-col md:flex-row gap-7 h-full justify-center items-center">
       {edit ? (
         <>
           <ChlidrenContentImage

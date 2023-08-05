@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { Drawer, FormInstance } from "antd";
 import { AiOutlinePlus } from "react-icons/ai";
 import DrawerContent from "./drawer-content/drawerContent";
 import FormSelected from "./node-children/form-selected";
 import { E1, E2, E3, E4, E5, E6, E7 } from "./drawer-content/drawerTemplate";
+import { useEffect, useState } from "react";
+import React from "react";
 
 interface ImageLeftImageRightProps {
   imageName: string;
@@ -142,7 +143,7 @@ const ContentList: React.FC<ContentListProps> = ({
         ></DrawerContent>
       </Drawer>
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 w-full">
         {content?.map((data, index) => {
           return (
             <React.Fragment key={`content-selected-i-${index}`}>

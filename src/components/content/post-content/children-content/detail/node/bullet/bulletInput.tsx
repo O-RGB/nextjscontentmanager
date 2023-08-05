@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { MdRemoveCircleOutline } from "react-icons/md";
 import { MinusOutlined } from "@ant-design/icons"; 
 import { FormInstance } from "antd";
-import ButtonIconRoundCommon from "../../../../../../components/common/button-icon-round";
-import InputCommon from "../../../../../../components/common/input/input";
-import TextAreaCommon from "../../../../../../components/common/textArea";
+import ButtonIconRoundCommon from "../../../../../../common/button-icon-round";
+import InputCommon from "../../../../../../common/input/input";
+import TextAreaCommon from "../../../../../../common/textArea";
 
 interface BulletNodeInputProps {
   name: string;

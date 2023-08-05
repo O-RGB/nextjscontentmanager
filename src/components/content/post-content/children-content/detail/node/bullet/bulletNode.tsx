@@ -2,7 +2,7 @@ import { FormInstance } from "antd";
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import BulletNodeInput from "./bulletInput";
-import SelectCommon from "../../../../../../components/common/select/select";
+import SelectCommon from "../../../../../../common/select/select";
 const formType: NodeFormId = "T2-Bullet";
 interface BulletNodeProps {
   name: string;

@@ -28,5 +28,5 @@ body {
 }
 
 .layout {
-  @apply max-w-[100rem] flex flex-col  justify-center items-center w-full;
+  @apply max-w-[80rem] flex flex-col  justify-center items-center w-full p-0 md:p-5 ;
 }

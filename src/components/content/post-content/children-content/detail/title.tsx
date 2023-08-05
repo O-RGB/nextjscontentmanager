@@ -4,7 +4,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { items } from "./menu";
 import ControlNodeSelected from "./control";
 import { NodeSelectIndex } from "./node";
-import InputCommon from "../../../../components/common/input/input";
+import InputCommon from "../../../../common/input/input";
 
 interface ChildrenContentTitleProps {
   imageName: string;
