@@ -148,7 +148,16 @@ const ChildrenContentTitle: React.FC<ChildrenContentTitleProps> = ({
         setInitData(true);
       }, 0);
     }
-  }, [initText, initDetail]);
+  }, [
+    initText,
+    initDetail,
+    imageName,
+    indexActive,
+    nodeSelect,
+    nodeSelectOutput,
+
+    form,
+  ]);
   return (
     <>
       <div className="w-full" key={imageName + `-${indexActive}-` + "e1"}>

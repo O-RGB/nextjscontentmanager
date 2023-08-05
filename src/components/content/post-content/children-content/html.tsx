@@ -27,7 +27,7 @@ const ChlidrenContentHtml: React.FC<ChlidrenContentHtmlProps> = ({
         form.setFieldValue(imageName + "h1", iniHtml);
       }, 0);
     }
-  }, [iniHtml]);
+  }, [iniHtml, form, imageName]);
   return (
     <>
       <HtmlEditorCommon

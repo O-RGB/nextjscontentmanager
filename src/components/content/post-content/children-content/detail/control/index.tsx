@@ -29,7 +29,7 @@ const ControlNodeSelected: React.FC<ControlNodeSelectedProps> = ({
   useEffect(() => {
     setRemove(remove);
     // content.props.string = "eijgei";
-  }, []);
+  }, [remove]);
 
   if (isRemove) {
     return <></>;

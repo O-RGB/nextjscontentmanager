@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import { MdRemoveCircleOutline } from "react-icons/md";
-import { MinusOutlined } from "@ant-design/icons"; 
+import { MinusOutlined } from "@ant-design/icons";
 import { FormInstance } from "antd";
 import ButtonIconRoundCommon from "../../../../../../common/button-icon-round";
 import InputCommon from "../../../../../../common/input/input";
@@ -51,7 +51,7 @@ const BulletNodeInput: React.FC<BulletNodeInputProps> = ({
       setDetail(init.detail ? init.detail : "");
       form?.setFieldValue("bullet-detail-" + name, init.detail);
     }
-  }, [bullet]);
+  }, [bullet, form, index, init, name]);
 
   if (isRemove) {
     return <></>;

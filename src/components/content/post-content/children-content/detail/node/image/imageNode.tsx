@@ -54,7 +54,7 @@ const ImageNode: React.FC<ImageNodeProps> = ({
         }
       }, 0);
     }
-  }, [initValue]);
+  }, [initValue, form, index, name, onSet]);
 
   const showModal = () => {
     setIsModalOpen(true);

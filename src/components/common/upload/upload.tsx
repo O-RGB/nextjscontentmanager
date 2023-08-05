@@ -3,6 +3,7 @@ import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { UploadListType } from "antd/es/upload/interface";
+import OImage from "@/components/image-optimization /OImage";
 
 interface UploadCommonProps {
   FormItemProps?: FormItemProps;
@@ -87,8 +88,9 @@ const UploadCommon: React.FC<UploadCommonProps> = ({
           ) : (
             <>
               {imageUrl ? (
-                <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+                <OImage url={imageUrl}></OImage>
               ) : (
+                // <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
                 uploadButton
               )}
             </>

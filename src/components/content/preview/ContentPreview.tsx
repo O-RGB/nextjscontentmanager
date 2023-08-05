@@ -54,7 +54,10 @@ const Detail = (nodeSelectOutput?: NodeSelectOutput[]) => {
             <div className="text-xl">
               {data.bullet.map((bull, bindex) => {
                 return (
-                  <div className="flex gap-2">
+                  <div
+                    key={`bullet-key-element-${bindex}`}
+                    className="flex gap-2"
+                  >
                     {bull.header == "number" ? (
                       <div className="min-w-[10px] md:min-w-[40px] text-right whitespace-nowrap ">{`${
                         bindex + 1

@@ -25,7 +25,7 @@ const TextAreaNode: React.FC<TextAreaNodeProps> = ({
     if (form && initValue) {
       form.setFieldValue(name, initValue);
     }
-  }, [initValue, form]);
+  }, [initValue, form, name]);
   return (
     <div key={name + "node" + index} className="pt-6">
       <TextAreaCommon

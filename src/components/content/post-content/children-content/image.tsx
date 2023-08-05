@@ -47,7 +47,7 @@ const ChlidrenContentImage: React.FC<ChlidrenContentImageProps> = ({
         }
       }, 0);
     }
-  }, [iniImage, iniAlt]);
+  }, [iniImage, iniAlt, form, image, imageName, indexActive, onSet]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
